@@ -8,8 +8,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 class AccountRepoTest {
 
@@ -108,17 +107,17 @@ class AccountRepoTest {
 
     @Test
     void validAccountId(){
-        assertEquals(true,this.accountRepo.validAccountId("3c93831c-29f4-4fd5-a99e-442482ffaeed"));
+        assertTrue(this.accountRepo.validAccountId("3c93831c-29f4-4fd5-a99e-442482ffaeed"));
     }
 
     @Test
     void validAccountIdShouldFailNonExistentAccountId() {
-        assertEquals(false,this.accountRepo.validAccountId("9c93831c-29f4-4fd5-a99e-442482ffaeed"));
+        assertFalse(this.accountRepo.validAccountId("9c93831c-29f4-4fd5-a99e-442482ffaeed"));
     }
 
     @Test
     void validUUID() {
-        assertEquals(true,this.accountRepo.validUUID("3c93831c-29f4-4fd5-a99e-442482ffaeed"));
-        assertEquals(false,this.accountRepo.validUUID("3c93831c"));
+        assertTrue(this.accountRepo.validUUID("3c93831c-29f4-4fd5-a99e-442482ffaeed"));
+        assertFalse(this.accountRepo.validUUID("3c93831c"));
     }
 }
