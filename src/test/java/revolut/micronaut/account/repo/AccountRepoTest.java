@@ -35,7 +35,10 @@ class AccountRepoTest {
     @Test
     void createAccount() {
         assertEquals(100.00, this.accountRepo.createAccount("a8160273-d592-4273-ba59-593be90b3ffe", 100.00));
+    }
 
+    @Test
+    void createAccountShouldFailNonPositiveInitial() {
         try {
             this.accountRepo.createAccount("a8160273-d592-4273-ba59-593be90b3ffe", -100.00);
             fail();
@@ -49,7 +52,10 @@ class AccountRepoTest {
         assertEquals(200.00, this.accountRepo.addBalance("3c93831c-29f4-4fd5-a99e-442482ffaeed", 100.00));
         assertEquals(300.00, this.accountRepo.addBalance("3c93831c-29f4-4fd5-a99e-442482ffaeed", 100.00));
         assertEquals(400.00, this.accountRepo.addBalance("3c93831c-29f4-4fd5-a99e-442482ffaeed", 100.00));
+    }
 
+    @Test
+    void addBalanceShouldFailNonPositiveAmount() {
         try {
             this.accountRepo.addBalance("3c93831c-29f4-4fd5-a99e-442482ffaeed", -100.00);
             fail();
@@ -58,17 +64,24 @@ class AccountRepoTest {
         }
     }
 
+
     @Test
     void subtractBalance() {
         assertEquals(70.00, this.accountRepo.subtractBalance("3c93831c-29f4-4fd5-a99e-442482ffaeed", 30.00));
         assertEquals(40.00, this.accountRepo.subtractBalance("3c93831c-29f4-4fd5-a99e-442482ffaeed", 30.00));
+    }
 
+    @Test
+    void subtractBalanceShouldFailInsufficientFunds() {
         try {
-            assertEquals(400.00, this.accountRepo.subtractBalance("3c93831c-29f4-4fd5-a99e-442482ffaeed", 100.00));
+            assertEquals(400.00, this.accountRepo.subtractBalance("3c93831c-29f4-4fd5-a99e-442482ffaeed", 400.00));
         } catch (IllegalArgumentException e) {
             assertEquals("Account 3c93831c-29f4-4fd5-a99e-442482ffaeed has insufficient funds", e.getMessage());
         }
+    }
 
+    @Test
+    void subtractBalanceShouldFailNonPositive() {
         try {
             this.accountRepo.subtractBalance("3c93831c-29f4-4fd5-a99e-442482ffaeed", -100.00);
             fail();
@@ -77,16 +90,35 @@ class AccountRepoTest {
         }
     }
 
+
     @Test
     void getAccountBalance() {
-
         assertEquals(BigDecimal.valueOf(100.00), this.accountRepo.getAccountBalance("3c93831c-29f4-4fd5-a99e-442482ffaeed"));
+    }
 
+    @Test
+    void getAccountBalanceShouldFailNonExistentId() {
         try {
             this.accountRepo.getAccountBalance("randomstring");
             fail();
         } catch (IllegalArgumentException e) {
             assertEquals("ID randomstring does not exist", e.getMessage());
         }
+    }
+
+    @Test
+    void validAccountId(){
+        assertEquals(true,this.accountRepo.validAccountId("3c93831c-29f4-4fd5-a99e-442482ffaeed"));
+    }
+
+    @Test
+    void validAccountIdShouldFailNonExistentAccountId() {
+        assertEquals(false,this.accountRepo.validAccountId("9c93831c-29f4-4fd5-a99e-442482ffaeed"));
+    }
+
+    @Test
+    void validUUID() {
+        assertEquals(true,this.accountRepo.validUUID("3c93831c-29f4-4fd5-a99e-442482ffaeed"));
+        assertEquals(false,this.accountRepo.validUUID("3c93831c"));
     }
 }
