@@ -1,11 +1,11 @@
 package revolut.micronaut.account.model.response;
 
-public final class CreateResponseDto {
+public final class CreateResponse {
     private String accountId;
     private double initialBalance;
     private String timeCreated;
 
-    public CreateResponseDto(String accountId, double initialBalance, String timeCreated) {
+    public CreateResponse(String accountId, double initialBalance, String timeCreated) {
         this.accountId = accountId;
         this.initialBalance = initialBalance;
         this.timeCreated = timeCreated;
@@ -37,7 +37,7 @@ public final class CreateResponseDto {
 
     @Override
     public String toString() {
-        return "CreateResponseDto{" +
+        return "CreateResponse{" +
                 "accountId='" + accountId + '\'' +
                 ", initialBalance=" + initialBalance +
                 '}';

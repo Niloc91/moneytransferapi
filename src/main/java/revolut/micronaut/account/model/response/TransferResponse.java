@@ -1,15 +1,15 @@
 package revolut.micronaut.account.model.response;
 
-public final class TransferResponseDto {
+public final class TransferResponse {
     private String senderId;
     private String recieverId;
     private double amount;
     private String transferTime;
 
-    public TransferResponseDto() {
+    public TransferResponse() {
     }
 
-    public TransferResponseDto(String senderId, String recieverId, double amount, String transferTime) {
+    public TransferResponse(String senderId, String recieverId, double amount, String transferTime) {
         this.senderId = senderId;
         this.recieverId = recieverId;
         this.amount = amount;
@@ -50,7 +50,7 @@ public final class TransferResponseDto {
 
     @Override
     public String toString() {
-        return "TransferResponseDto{" +
+        return "TransferResponse{" +
                 "senderId='" + senderId + '\'' +
                 ", recieverId='" + recieverId + '\'' +
                 ", amount=" + amount +

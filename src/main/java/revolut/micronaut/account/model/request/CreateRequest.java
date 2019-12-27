@@ -1,16 +1,16 @@
 package revolut.micronaut.account.model.request;
 
 
-public final class CreateRequestDto {
+public final class CreateRequest {
 
     private String accountId;
     private double initialBalance;
 
-    public CreateRequestDto(){
+    public CreateRequest(){
 
     }
 
-    public CreateRequestDto(String accountId, double initialBalance){
+    public CreateRequest(String accountId, double initialBalance){
         this.accountId = accountId;
         this.initialBalance = initialBalance;
     }

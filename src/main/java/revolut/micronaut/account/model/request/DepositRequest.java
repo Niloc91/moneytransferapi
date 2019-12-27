@@ -1,14 +1,14 @@
 package revolut.micronaut.account.model.request;
 
-public final class WithdrawRequestDto {
+public final class DepositRequest {
     private String accountId;
     private double amount;
 
-    public WithdrawRequestDto(){
+    public DepositRequest(){
 
     }
 
-    public WithdrawRequestDto(String accountId, double amount) {
+    public DepositRequest(String accountId, double amount) {
         this.accountId = accountId;
         this.amount = amount;
     }
@@ -28,5 +28,4 @@ public final class WithdrawRequestDto {
     public void setAmount(double amount) {
         this.amount = amount;
     }
-
 }

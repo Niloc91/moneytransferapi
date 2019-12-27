@@ -19,29 +19,29 @@ public class AccountController {
     }
 
     @Post("/create")
-    public HttpResponse createAccount(@Body CreateRequestDto createRequestDto) {
+    public HttpResponse createAccount(@Body CreateRequest createRequest) {
         try {
             return HttpResponse
-                    .ok(accountService.createAccount(createRequestDto));
+                    .ok(accountService.createAccount(createRequest));
         } catch (IllegalArgumentException e) {
             return HttpResponse.badRequest(e.getMessage());
         }
     }
 
     @Put("/withdraw")
-    public HttpResponse withdraw(@Body WithdrawRequestDto withdrawRequestDto) {
+    public HttpResponse withdraw(@Body WithdrawRequest withdrawRequest) {
         try {
-            return HttpResponse.ok(this.accountService.withdraw(withdrawRequestDto));
+            return HttpResponse.ok(this.accountService.withdraw(withdrawRequest));
         } catch (IllegalArgumentException e) {
             return HttpResponse.badRequest(e.getMessage());
         }
     }
 
     @Put("/deposit")
-    public HttpResponse deposit(@Body DepositRequestDto depositRequestDto) {
+    public HttpResponse deposit(@Body DepositRequest depositRequest) {
         try {
             return HttpResponse
-                    .ok(this.accountService.deposit(depositRequestDto));
+                    .ok(this.accountService.deposit(depositRequest));
         } catch (IllegalArgumentException e) {
             return HttpResponse.badRequest(e.getMessage());
         }
@@ -49,20 +49,20 @@ public class AccountController {
 
     @Get("/balance/{id}")
     public HttpResponse accountBalance(@NotBlank String id) {
-        BalanceRequestDto balanceRequestDto = new BalanceRequestDto(id);
+        BalanceRequest balanceRequest = new BalanceRequest(id);
         try {
             return HttpResponse
-                    .ok(this.accountService.getBalance(balanceRequestDto));
+                    .ok(this.accountService.getBalance(balanceRequest));
         } catch (IllegalArgumentException e) {
             return HttpResponse.badRequest(e.getMessage());
         }
     }
 
     @Put("/transfer")
-    public HttpResponse transfer(@Body TransferRequestDto transferRequestDto) {
+    public HttpResponse transfer(@Body TransferRequest transferRequest) {
         try {
             return HttpResponse
-                    .ok(this.accountService.transfer(transferRequestDto));
+                    .ok(this.accountService.transfer(transferRequest));
         } catch (IllegalArgumentException e) {
             return HttpResponse.badRequest(e.getMessage());
         }

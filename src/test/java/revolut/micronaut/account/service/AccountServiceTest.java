@@ -34,45 +34,45 @@ class AccountServiceTest {
 
     @Test
     void createAccount() {
-        assertEquals("CreateResponseDto{accountId='0030db93-593a-48d7-b85a-57c988460149', initialBalance=100.0}",
+        assertEquals("CreateResponse{accountId='0030db93-593a-48d7-b85a-57c988460149', initialBalance=100.0}",
                 this.accountService.createAccount(
-                        new CreateRequestDto("0030db93-593a-48d7-b85a-57c988460149", 100.00))
+                        new CreateRequest("0030db93-593a-48d7-b85a-57c988460149", 100.00))
                         .toString()
         );
     }
 
     @Test
     void getBalance() {
-        assertEquals("BalanceResponseDto{accountId='0030db93-593a-48d7-b85a-57c988460149', balance=550.0}",
+        assertEquals("BalanceResponse{accountId='0030db93-593a-48d7-b85a-57c988460149', balance=550.0}",
                 this.accountService.getBalance(
-                        new BalanceRequestDto("0030db93-593a-48d7-b85a-57c988460149"))
+                        new BalanceRequest("0030db93-593a-48d7-b85a-57c988460149"))
                         .toString()
         );
     }
 
     @Test
     void deposit() {
-        assertEquals("DepositResponseDto{accountId='0030db93-593a-48d7-b85a-57c988460149', depositAmount=100.0, balance=650.0}",
+        assertEquals("DepositResponse{accountId='0030db93-593a-48d7-b85a-57c988460149', depositAmount=100.0, balance=650.0}",
                 this.accountService.deposit(
-                        new DepositRequestDto("0030db93-593a-48d7-b85a-57c988460149", 100.00))
+                        new DepositRequest("0030db93-593a-48d7-b85a-57c988460149", 100.00))
                         .toString()
         );
     }
 
     @Test
     void withdraw() {
-        assertEquals("WithdrawResponseDto{accountId='0030db93-593a-48d7-b85a-57c988460149', withdrawAmount=100.0, balance=450.0}",
+        assertEquals("WithdrawResponse{accountId='0030db93-593a-48d7-b85a-57c988460149', withdrawAmount=100.0, balance=450.0}",
                 this.accountService.withdraw(
-                        new WithdrawRequestDto("0030db93-593a-48d7-b85a-57c988460149", 100.00))
+                        new WithdrawRequest("0030db93-593a-48d7-b85a-57c988460149", 100.00))
                         .toString()
         );
     }
 
     @Test
     void transfer() {
-        assertEquals("TransferResponseDto{senderId='0030db93-593a-48d7-b85a-57c988460149', recieverId='3c93831c-29f4-4fd5-a99e-442482ffaeed', amount=100.0}",
+        assertEquals("TransferResponse{senderId='0030db93-593a-48d7-b85a-57c988460149', recieverId='3c93831c-29f4-4fd5-a99e-442482ffaeed', amount=100.0}",
                 this.accountService.transfer(
-                        new TransferRequestDto("3c93831c-29f4-4fd5-a99e-442482ffaeed", "0030db93-593a-48d7-b85a-57c988460149", 100.00))
+                        new TransferRequest("3c93831c-29f4-4fd5-a99e-442482ffaeed", "0030db93-593a-48d7-b85a-57c988460149", 100.00))
                         .toString()
         );
     }

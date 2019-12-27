@@ -1,13 +1,13 @@
 package revolut.micronaut.account.model.response;
 
-public final class DepositResponseDto {
+public final class DepositResponse {
 
     private String accountId;
     private String depositTime;
     private double depositAmount;
     private double balance;
 
-    public DepositResponseDto(String accountId, String depositTime, double depositAmount, double balance) {
+    public DepositResponse(String accountId, String depositTime, double depositAmount, double balance) {
         this.accountId = accountId;
         this.depositTime = depositTime;
         this.depositAmount = depositAmount;
@@ -48,7 +48,7 @@ public final class DepositResponseDto {
 
     @Override
     public String toString() {
-        return "DepositResponseDto{" +
+        return "DepositResponse{" +
                 "accountId='" + accountId + '\'' +
                 ", depositAmount=" + depositAmount +
                 ", balance=" + balance +

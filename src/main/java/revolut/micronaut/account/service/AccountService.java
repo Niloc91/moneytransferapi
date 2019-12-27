@@ -19,59 +19,59 @@ public class AccountService {
         this.accountRepo = accountRepo;
     }
 
-    public CreateResponseDto createAccount(CreateRequestDto createRequestDto) {
-        accountRepo.createAccount(createRequestDto.getAccountId(), createRequestDto.getInitialBalance());
+    public CreateResponse createAccount(CreateRequest createRequest) {
+        accountRepo.createAccount(createRequest.getAccountId(), createRequest.getInitialBalance());
 
-        return new CreateResponseDto(
-                createRequestDto.getAccountId(),
-                createRequestDto.getInitialBalance(),
+        return new CreateResponse(
+                createRequest.getAccountId(),
+                createRequest.getInitialBalance(),
                 Instant.now().toString()
         );
     }
 
-    public BalanceResponseDto getBalance(BalanceRequestDto balanceRequestDto) {
-        final String accountId = balanceRequestDto.getAccountId();
+    public BalanceResponse getBalance(BalanceRequest balanceRequest) {
+        final String accountId = balanceRequest.getAccountId();
 
-        return new BalanceResponseDto(
+        return new BalanceResponse(
                 accountId,
                 Instant.now().toString(),
                 accountRepo.getAccountBalance(accountId).doubleValue()
         );
     }
 
-    public DepositResponseDto deposit(DepositRequestDto depositRequestDto) {
-        final String accountId = depositRequestDto.getAccountId();
-        final double balance = accountRepo.addBalance(accountId, depositRequestDto.getAmount());
+    public DepositResponse deposit(DepositRequest depositRequest) {
+        final String accountId = depositRequest.getAccountId();
+        final double balance = accountRepo.addBalance(accountId, depositRequest.getAmount());
 
-        return new DepositResponseDto(
+        return new DepositResponse(
                 accountId,
                 Instant.now().toString(),
-                depositRequestDto.getAmount(),
+                depositRequest.getAmount(),
                 balance
         );
     }
 
-    public WithdrawResponseDto withdraw(WithdrawRequestDto withdrawRequestDto) {
-        final String accountId = withdrawRequestDto.getAccountId();
-        final double balance = accountRepo.subtractBalance(accountId, withdrawRequestDto.getAmount());
+    public WithdrawResponse withdraw(WithdrawRequest withdrawRequest) {
+        final String accountId = withdrawRequest.getAccountId();
+        final double balance = accountRepo.subtractBalance(accountId, withdrawRequest.getAmount());
 
-        return new WithdrawResponseDto(
+        return new WithdrawResponse(
                 accountId,
                 Instant.now().toString(),
-                withdrawRequestDto.getAmount(),
+                withdrawRequest.getAmount(),
                 balance
         );
     }
 
-    public TransferResponseDto transfer(TransferRequestDto transferRequestDto) {
-        final String receiverId = transferRequestDto.getRecieverId();
-        final String senderId = transferRequestDto.getSenderId();
-        final double amount = transferRequestDto.getAmount();
+    public TransferResponse transfer(TransferRequest transferRequest) {
+        final String receiverId = transferRequest.getRecieverId();
+        final String senderId = transferRequest.getSenderId();
+        final double amount = transferRequest.getAmount();
 
         accountRepo.subtractBalance(senderId, amount);
         accountRepo.addBalance(receiverId, amount);
 
-        return new TransferResponseDto(
+        return new TransferResponse(
                 receiverId,
                 senderId,
                 amount,
