@@ -22,7 +22,7 @@ public class AccountController {
     public HttpResponse createAccount(@Body CreateRequest createRequest) {
         try {
             return HttpResponse
-                    .ok(accountService.createAccount(createRequest));
+                    .created(accountService.createAccount(createRequest));
         } catch (IllegalArgumentException e) {
             return HttpResponse.badRequest(e.getMessage());
         }
