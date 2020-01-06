@@ -1,6 +1,7 @@
 package revolut.micronaut.account.repo;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -38,12 +39,9 @@ class AccountRepoTest {
 
     @Test
     void createAccountShouldFailNonPositiveInitial() {
-        try {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
             this.accountRepo.createAccount("a8160273-d592-4273-ba59-593be90b3ffe", -100.00);
-            fail();
-        } catch (IllegalArgumentException e) {
-            assertEquals("Amount is not positive", e.getMessage());
-        }
+        });
     }
 
     @Test
@@ -55,12 +53,10 @@ class AccountRepoTest {
 
     @Test
     void addBalanceShouldFailNonPositiveAmount() {
-        try {
-            this.accountRepo.addBalance("3c93831c-29f4-4fd5-a99e-442482ffaeed", -100.00);
-            fail();
-        } catch (IllegalArgumentException e) {
-            assertEquals("Amount is not positive", e.getMessage());
-        }
+        Assertions.assertThrows(IllegalArgumentException.class, ()->{
+                    this.accountRepo.addBalance("3c93831c-29f4-4fd5-a99e-442482ffaeed", -100.00);
+                }
+        );
     }
 
 
@@ -72,23 +68,18 @@ class AccountRepoTest {
 
     @Test
     void subtractBalanceShouldFailInsufficientFunds() {
-        try {
+        Assertions.assertThrows(IllegalArgumentException.class, ()->{
             assertEquals(400.00, this.accountRepo.subtractBalance("3c93831c-29f4-4fd5-a99e-442482ffaeed", 400.00));
-        } catch (IllegalArgumentException e) {
-            assertEquals("Account 3c93831c-29f4-4fd5-a99e-442482ffaeed has insufficient funds", e.getMessage());
-        }
+            }
+        );
     }
 
     @Test
     void subtractBalanceShouldFailNonPositive() {
-        try {
+        Assertions.assertThrows(IllegalArgumentException.class,()->{
             this.accountRepo.subtractBalance("3c93831c-29f4-4fd5-a99e-442482ffaeed", -100.00);
-            fail();
-        } catch (IllegalArgumentException e) {
-            assertEquals("Amount is not positive", e.getMessage());
-        }
+        });
     }
-
 
     @Test
     void getAccountBalance() {
@@ -97,12 +88,10 @@ class AccountRepoTest {
 
     @Test
     void getAccountBalanceShouldFailNonExistentId() {
-        try {
+        Assertions.assertThrows(IllegalArgumentException.class, ()->{
             this.accountRepo.getAccountBalance("randomstring");
-            fail();
-        } catch (IllegalArgumentException e) {
-            assertEquals("ID randomstring does not exist", e.getMessage());
-        }
+            }
+        );
     }
 
     @Test

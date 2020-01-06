@@ -66,6 +66,11 @@ public class AccountService {
     public TransferResponse transfer(TransferRequest transferRequest) {
         final String receiverId = transferRequest.getRecieverId();
         final String senderId = transferRequest.getSenderId();
+
+        if(receiverId.compareTo(senderId) == 0){
+            throw new IllegalArgumentException("Sender id can not be equal to receiver id");
+        }
+
         final double amount = transferRequest.getAmount();
 
         accountRepo.subtractBalance(senderId, amount);
