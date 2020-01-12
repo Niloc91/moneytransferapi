@@ -8,32 +8,17 @@ import revolut.micronaut.account.repo.AccountRepo;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.Map;
 
 @Singleton
 public class AccountService {
 
     AccountRepo accountRepo;
-    Map<String,String> operationLog;
+    OperationLog operationLog;
 
     @Inject
     public AccountService(AccountRepo accountRepo) {
         this.accountRepo = accountRepo;
-        this.operationLog = new HashMap<>();
-    }
-
-    public Operation addOperation(String id, String timestamp){
-        operationLog.put(id,timestamp);
-        return new Operation(id, timestamp);
-    }
-
-    public boolean hasOperation(String id){
-        return operationLog.containsKey(id);
-    }
-
-    public Operation getOperation(String id){
-        return new Operation(id,operationLog.get(id));
+        this.operationLog = new OperationLog();
     }
 
     public CreateResponse createAccount(CreateRequest createRequest) {
@@ -59,8 +44,8 @@ public class AccountService {
     public DepositResponse deposit(DepositRequest depositRequest) {
         final String accountId = depositRequest.getAccountId();
 
-        if(hasOperation(depositRequest.getId())){
-            Operation operation = getOperation(depositRequest.getId());
+        if(operationLog.hasOperation(depositRequest.getId())){
+            Operation operation = operationLog.getOperation(depositRequest.getId());
             return new DepositResponse(
                     operation.getId(),
                     accountId,
@@ -69,7 +54,7 @@ public class AccountService {
         }
 
         accountRepo.addBalance(accountId, depositRequest.getAmount());
-        Operation createdOperation = addOperation(depositRequest.getId(),Instant.now().toString());
+        Operation createdOperation = operationLog.addOperation(depositRequest.getId(),Instant.now().toString());
 
         return new DepositResponse(
                 depositRequest.getId(),
@@ -81,8 +66,8 @@ public class AccountService {
     public WithdrawResponse withdraw(WithdrawRequest withdrawRequest) {
         final String accountId = withdrawRequest.getAccountId();
 
-        if(hasOperation(withdrawRequest.getId())){
-            Operation operation = getOperation(withdrawRequest.getId());
+        if(operationLog.hasOperation(withdrawRequest.getId())){
+            Operation operation = operationLog.getOperation(withdrawRequest.getId());
             return new WithdrawResponse(
                     operation.getId(),
                     accountId,
@@ -91,7 +76,7 @@ public class AccountService {
         }
 
         accountRepo.subtractBalance(accountId, withdrawRequest.getAmount());
-        Operation createdOperation = addOperation(withdrawRequest.getId(),Instant.now().toString());
+        Operation createdOperation = operationLog.addOperation(withdrawRequest.getId(),Instant.now().toString());
 
         return new WithdrawResponse(
                 createdOperation.getId(),
@@ -108,8 +93,8 @@ public class AccountService {
             throw new IllegalArgumentException("Sender id can not be equal to receiver id");
         }
 
-        if(hasOperation(transferRequest.getId())){
-            Operation operation = getOperation(transferRequest.getId());
+        if(operationLog.hasOperation(transferRequest.getId())){
+            Operation operation = operationLog.getOperation(transferRequest.getId());
             return new TransferResponse(
                     operation.getId(),
                     operation.getTimestamp()
@@ -119,7 +104,7 @@ public class AccountService {
         final double amount = transferRequest.getAmount();
         accountRepo.subtractBalance(senderId, amount);
         accountRepo.addBalance(receiverId, amount);
-        Operation createdOperation = addOperation(transferRequest.getId(),Instant.now().toString());
+        Operation createdOperation = operationLog.addOperation(transferRequest.getId(),Instant.now().toString());
 
         return new TransferResponse(
             createdOperation.getId(),

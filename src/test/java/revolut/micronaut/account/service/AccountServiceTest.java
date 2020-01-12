@@ -38,8 +38,8 @@ class AccountServiceTest {
 
     @Test
     void createAccountWithInitialBalance() {
-        this.accountService.createAccount(new CreateRequest("0030db93-593a-48d7-b85a-57c988460149", 100.00));
-        assertEquals(BigDecimal.valueOf(100.00),this.accountRepo.getAccountBalance("0030db93-593a-48d7-b85a-57c988460149"));
+        this.accountService.createAccount(new CreateRequest("0030db93-593a-48d7-b85a-57c988460150", 100.00));
+        assertEquals(BigDecimal.valueOf(100.00),this.accountRepo.getAccountBalance("0030db93-593a-48d7-b85a-57c988460150"));
     }
 
     @Test
