@@ -45,6 +45,15 @@ class AccountRepoTest {
     }
 
     @Test
+    void createAccountShouldFailAlreadyPresent() {
+        assertEquals(100.00, this.accountRepo.createAccount("a8160273-d592-4273-ba59-593be90b3ffe", 100.00));
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            this.accountRepo.createAccount("a8160273-d592-4273-ba59-593be90b3ffe", 100.00);
+        });
+    }
+
+    @Test
     void addBalance() {
         assertEquals(200.00, this.accountRepo.addBalance("3c93831c-29f4-4fd5-a99e-442482ffaeed", 100.00));
         assertEquals(300.00, this.accountRepo.addBalance("3c93831c-29f4-4fd5-a99e-442482ffaeed", 100.00));

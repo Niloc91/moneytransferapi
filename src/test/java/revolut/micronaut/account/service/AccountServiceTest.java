@@ -51,19 +51,28 @@ class AccountServiceTest {
 
     @Test
     void deposit() {
-        this.accountService.deposit(new DepositRequest("0030db93-593a-48d7-b85a-57c988460149", 100.00));
+        this.accountService.deposit(new DepositRequest("5539adb4-df56-4865-b002-969062a00a8a","0030db93-593a-48d7-b85a-57c988460149", 100.00));
+        assertEquals(BigDecimal.valueOf(650.00),this.accountRepo.getAccountBalance("0030db93-593a-48d7-b85a-57c988460149"));
+    }
+
+    @Test
+    void depositMultipleWithSameId() {
+        this.accountService.deposit(new DepositRequest("5539adb4-df56-4865-b002-969062a00a8a","0030db93-593a-48d7-b85a-57c988460149", 100.00));
+        this.accountService.deposit(new DepositRequest("5539adb4-df56-4865-b002-969062a00a8a","0030db93-593a-48d7-b85a-57c988460149", 100.00));
+        this.accountService.deposit(new DepositRequest("5539adb4-df56-4865-b002-969062a00a8a","0030db93-593a-48d7-b85a-57c988460149", 100.00));
+        this.accountService.deposit(new DepositRequest("5539adb4-df56-4865-b002-969062a00a8a","0030db93-593a-48d7-b85a-57c988460149", 100.00));
         assertEquals(BigDecimal.valueOf(650.00),this.accountRepo.getAccountBalance("0030db93-593a-48d7-b85a-57c988460149"));
     }
 
     @Test
     void withdraw() {
-        this.accountService.withdraw(new WithdrawRequest("0030db93-593a-48d7-b85a-57c988460149", 100.00));
+        this.accountService.withdraw(new WithdrawRequest("868f7515-c5c3-468a-9535-b3026c519843","0030db93-593a-48d7-b85a-57c988460149", 100.00));
         assertEquals(BigDecimal.valueOf(450.00),this.accountRepo.getAccountBalance("0030db93-593a-48d7-b85a-57c988460149"));
     }
 
     @Test
     void transfer() {
-        this.accountService.transfer(new TransferRequest("3c93831c-29f4-4fd5-a99e-442482ffaeed", "0030db93-593a-48d7-b85a-57c988460149", 100.00));
+        this.accountService.transfer(new TransferRequest("dc9d4e83-51d3-4040-8d8d-ff06e0bf26cd","3c93831c-29f4-4fd5-a99e-442482ffaeed", "0030db93-593a-48d7-b85a-57c988460149", 100.00));
 
         assertEquals(BigDecimal.valueOf(0.00),this.accountRepo.getAccountBalance("3c93831c-29f4-4fd5-a99e-442482ffaeed"));
         assertEquals(BigDecimal.valueOf(650.00),this.accountRepo.getAccountBalance("0030db93-593a-48d7-b85a-57c988460149"));
@@ -74,10 +83,10 @@ class AccountServiceTest {
         Assertions.assertThrows(IllegalArgumentException.class, ()-> {
             this.accountService.transfer(
                     new TransferRequest(
+                            "73e528a3-bd33-4083-b271-c7ff3a4385de",
                             "3c93831c-29f4-4fd5-a99e-442482ffaeed",
                             "3c93831c-29f4-4fd5-a99e-442482ffaeed",
                             100.00));
         });
     }
-
 }

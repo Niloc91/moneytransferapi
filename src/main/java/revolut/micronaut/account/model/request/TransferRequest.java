@@ -1,14 +1,17 @@
 package revolut.micronaut.account.model.request;
 
 public final class TransferRequest {
+    private String id;
     private String senderId;
     private String recieverId;
     private double amount;
 
+
     public TransferRequest() {
     }
 
-    public TransferRequest(String senderId, String recieverId, double amount) {
+    public TransferRequest(String id, String senderId, String recieverId, double amount) {
+        this.id = id;
         this.senderId = senderId;
         this.recieverId = recieverId;
         this.amount = amount;
@@ -36,5 +39,13 @@ public final class TransferRequest {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

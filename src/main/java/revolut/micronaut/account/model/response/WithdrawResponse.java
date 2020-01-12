@@ -1,16 +1,22 @@
 package revolut.micronaut.account.model.response;
 
 public final class WithdrawResponse {
+    private String id;
     private String accountId;
     private String withdrawTime;
-    private double withdrawAmount;
-    private double balance;
 
-    public WithdrawResponse(String accountId, String withdrawTime, double withdrawAmount, double balance) {
+    public WithdrawResponse(String id, String accountId, String withdrawTime) {
+        this.id = id;
         this.accountId = accountId;
         this.withdrawTime = withdrawTime;
-        this.withdrawAmount = withdrawAmount;
-        this.balance = balance;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getAccountId() {
@@ -27,30 +33,5 @@ public final class WithdrawResponse {
 
     public void setWithdrawTime(String withdrawTime) {
         this.withdrawTime = withdrawTime;
-    }
-
-    public double getWithdrawAmount() {
-        return withdrawAmount;
-    }
-
-    public void setWithdrawAmount(double withdrawAmount) {
-        this.withdrawAmount = withdrawAmount;
-    }
-
-    public double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
-
-    @Override
-    public String toString() {
-        return "WithdrawResponse{" +
-                "accountId='" + accountId + '\'' +
-                ", withdrawAmount=" + withdrawAmount +
-                ", balance=" + balance +
-                '}';
     }
 }

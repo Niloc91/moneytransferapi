@@ -27,11 +27,15 @@ public class AccountRepo {
             throw new IllegalArgumentException("String is not valid UUID");
         }
 
+        if(validAccountId(accountId)){
+            throw new IllegalArgumentException("Account already present");
+        }
+
         this.accountData.put(accountId, BigDecimal.valueOf(amount));
         return this.getAccountBalance(accountId).doubleValue();
     }
 
-    public double addBalance(String accountId, double amount) {
+    public synchronized double addBalance(String accountId, double amount) {
         if (!isPositiveAmount(amount)) {
             throw new IllegalArgumentException("Amount is not positive");
         }
@@ -41,7 +45,7 @@ public class AccountRepo {
         return getAccountBalance(accountId).doubleValue();
     }
 
-    public double subtractBalance(String accountId, double amount) throws IllegalArgumentException {
+    public synchronized double subtractBalance(String accountId, double amount) throws IllegalArgumentException {
         if (!isPositiveAmount(amount)) {
             throw new IllegalArgumentException("Amount is not positive");
         }

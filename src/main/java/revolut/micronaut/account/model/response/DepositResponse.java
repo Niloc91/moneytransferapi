@@ -1,17 +1,22 @@
 package revolut.micronaut.account.model.response;
 
 public final class DepositResponse {
-
+    private String id;
     private String accountId;
     private String depositTime;
-    private double depositAmount;
-    private double balance;
 
-    public DepositResponse(String accountId, String depositTime, double depositAmount, double balance) {
+    public DepositResponse(String id, String accountId, String depositTime) {
+        this.id = id;
         this.accountId = accountId;
         this.depositTime = depositTime;
-        this.depositAmount = depositAmount;
-        this.balance = balance;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getAccountId() {
@@ -28,30 +33,5 @@ public final class DepositResponse {
 
     public void setDepositTime(String depositTime) {
         this.depositTime = depositTime;
-    }
-
-    public double getDepositAmount() {
-        return depositAmount;
-    }
-
-    public void setDepositAmount(double depositAmount) {
-        this.depositAmount = depositAmount;
-    }
-
-    public double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
-
-    @Override
-    public String toString() {
-        return "DepositResponse{" +
-                "accountId='" + accountId + '\'' +
-                ", depositAmount=" + depositAmount +
-                ", balance=" + balance +
-                '}';
     }
 }

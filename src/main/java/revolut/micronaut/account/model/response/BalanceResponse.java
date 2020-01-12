@@ -38,11 +38,4 @@ public final class BalanceResponse {
         this.balance = balance;
     }
 
-    @Override
-    public String toString() {
-        return "BalanceResponse{" +
-                "accountId='" + accountId + '\'' +
-                ", balance=" + balance +
-                '}';
-    }
 }
